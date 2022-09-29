@@ -1,5 +1,5 @@
-import { prisma } from "../dbStrategy/db";
-import * as userSchema from "../type/userType"
+import { prisma } from "../dbStrategy/db.js";
+import * as userSchema from "../type/userType.js"
 
 
 export async function findUserByEmail(email:string){
