@@ -2,9 +2,9 @@ import { Users} from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import * as errorsSchema from "../utils/errorUtils"
-import * as userRepository from "../repositories/userRepository"
-import * as userSchema from "../type/userType"
+import * as errorsSchema from "../utils/errorUtils.js"
+import * as userRepository from "../repositories/userRepository.js"
+import * as userSchema from "../type/userType.js"
 
 dotenv.config()
 
