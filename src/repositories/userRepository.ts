@@ -1,4 +1,4 @@
-import { prisma } from "../dbStrategy/db.js";
+import { prisma } from "../dbStrategy/db";
 import * as userSchema from "../type/userType"
 
 
