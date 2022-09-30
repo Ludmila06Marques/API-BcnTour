@@ -7,10 +7,11 @@ import * as errorsType from "../utils/errorUtils.js"
 
 export async function getAll(){
     const publish= await publishRepository.getAll()
-
     if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
+ 
+   return publish
 
-    return publish
+  
 }
 
 export async function getOne(id:number){
@@ -30,14 +31,16 @@ export async function insert(publish:publishType.CreatePublishType){
     const optionIdExist=await optionRepository.getOne(publish.optionId)
     if(!optionIdExist) throw errorsType.failNotFound("Option doesnt exist")
 
+
     const publishFormatted={
         coment:publish.coment,
         urlImage:publish.urlImage,
-        rateNote:Number(publish.rateNote),
+        rateNote:publish.rateNote,
+        localization:publish.localization,
         userId:publish.userId,
         optionId:publish.optionId
     }
-
+    console.log(publishFormatted)
     await publishRepository.insert(publishFormatted)
 }
 
@@ -57,5 +60,18 @@ export async function toDelete(id:number){
     await publishRepository.toDelete(id)
 }
 
+export async function getPublishesByUserId(userId:number){
 
+    const publish = await publishRepository.getPublishesByUserId(userId)
+  
+    if (!publish) throw errorsType.failNotFound("User dont have publish");
+    return publish
+}
+export async function getPublishesByOption(optionId:number){
+
+    const publish = await publishRepository.getPublishesByOption(optionId)
+  console.log(publish)
+    if (!publish) throw errorsType.failNotFound("Not found publish");
+    return publish
+}
 

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import * as errorsSchema from "../utils/errorUtils.js"
 import * as userRepository from "../repositories/userRepository.js"
 import * as userSchema from "../type/userType.js"
+import * as publishService from "../services/publishService.js"
 
 dotenv.config()
 
@@ -38,11 +39,10 @@ export async function createToken(login: userSchema.CreateUserTypeLogin) {
 
   return user;
 }
-
-
 export async function findUserById(id: number) {
   const user = await userRepository.findById (id);
   if (!user) throw errorsSchema.failNotFound("User not found");
+
 
   return user;
 }

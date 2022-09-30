@@ -10,7 +10,7 @@ publishRouter.get("/publish/:id" ,publishController.getOne);
 publishRouter.post("/publish" , validatePublish, publishController.insert);
 publishRouter.put("/publish/:id" , validatePublish, publishController.toUpdate);
 publishRouter.delete("/publish/:id" , publishController.toDelete);
-
-
+publishRouter.get("/publishUser/:userId" , publishController.getPublishesByUserId);
+publishRouter.get("/publishOption/:optionId" , publishController.getPublishesByOption );
 
 export default publishRouter;

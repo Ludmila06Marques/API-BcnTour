@@ -37,3 +37,15 @@ export async function toUpdate(id:number ,publish:publishSchema.CreatePublishTyp
     })
   }
 
+export async function getPublishesByUserId(userId:number){
+
+  return prisma.publish.findMany({where:{
+    userId
+  }})
+}
+export async function getPublishesByOption(optionId:number){
+
+  return prisma.publish.findMany({where:{
+    optionId
+  }})
+}

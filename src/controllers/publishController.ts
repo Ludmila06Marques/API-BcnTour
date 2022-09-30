@@ -19,7 +19,8 @@ export async function getOne(req:Request ,res:Response){
 
 export async function insert(req:Request ,res:Response) {
     const publish:publishType.CreatePublishType=req.body
-    
+
+   
     await publishService.insert(publish)
     res.sendStatus(201)//created
 }
@@ -37,4 +38,18 @@ export async function toUpdate(req:Request ,res:Response){
 
     await publishService.toUpdate(id ,publish)
     res.sendStatus(200)//sucess
+}
+export async function getPublishesByUserId(req:Request ,res:Response){
+    const userId= parseInt(req.params.userId)
+  
+
+    const result = await publishService.getPublishesByUserId(userId)
+    res.send(result).status(200)//sucess
+}
+export async function getPublishesByOption(req:Request ,res:Response){
+    const optionId= parseInt(req.params.optionId)
+  console.log(optionId)
+
+    const result = await publishService.getPublishesByOption(optionId)
+    res.send(result).status(200)//sucess
 }
