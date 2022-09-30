@@ -33,7 +33,7 @@ model Publish {
   id       Int     @id @default(autoincrement())
   coment   String
   urlImage String
-  RateNote Int
+  rateNote Int
   userId   Int
   optionId Int
   option   Options @relation(fields: [optionId], references: [id])

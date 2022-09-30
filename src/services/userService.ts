@@ -22,9 +22,12 @@ export async function loginUser(login: userSchema.CreateUserTypeLogin) {
   
   const user = await createToken(login);
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-  return token;
+  const formatResponse={
+    token , 
+    user
+  }
+  return formatResponse
 }
-
 export async function createToken(login: userSchema.CreateUserTypeLogin) {
   const user = await userRepository.findUserByEmail(login.email);
   if (!user) throw errorsSchema.failUnauth("unauthorized");

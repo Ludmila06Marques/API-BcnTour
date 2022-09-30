@@ -4,8 +4,8 @@ import { CreateUserType , CreateUserTypeLogin } from "../type/userType.js";
 
 export async function login(req:Request ,res:Response){
   const user:CreateUserTypeLogin = req.body;
-  const token = await loginUser(user);
-  res.send({token}).status(200);
+  const response = await loginUser(user);
+  res.send(response).status(200);
 }
 
 export async function signup(req:Request ,res:Response){
