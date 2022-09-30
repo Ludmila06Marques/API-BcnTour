@@ -2,7 +2,7 @@ import Joi from "joi";
 import * as userSchemaType from "../type/userType.js"
 
 
-export const userSchema = Joi.object<userSchemaType.CreateUserType> ({
+export const userSchemaSignup = Joi.object<userSchemaType.CreateUserType> ({
   email: Joi.string().email().required(),
   password: Joi.string().required(), 
   name:Joi.string().required(), 
@@ -12,3 +12,11 @@ export const userSchema = Joi.object<userSchemaType.CreateUserType> ({
   .uri()
 
 });
+
+
+export const userSchemaLogin = Joi.object<userSchemaType.CreateUserTypeLogin> ({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(), 
+});
+
+
