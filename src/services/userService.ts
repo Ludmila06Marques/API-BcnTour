@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import * as errorsSchema from "../utils/errorUtils.js"
 import * as userRepository from "../repositories/userRepository.js"
 import * as userSchema from "../type/userType.js"
+import * as publishService from "../services/publishService.js"
 
 dotenv.config()
 
@@ -22,9 +23,12 @@ export async function loginUser(login: userSchema.CreateUserTypeLogin) {
   
   const user = await createToken(login);
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-  return token;
+  const formatResponse={
+    token , 
+    user
+  }
+  return formatResponse
 }
-
 export async function createToken(login: userSchema.CreateUserTypeLogin) {
   const user = await userRepository.findUserByEmail(login.email);
   if (!user) throw errorsSchema.failUnauth("unauthorized");
@@ -35,11 +39,10 @@ export async function createToken(login: userSchema.CreateUserTypeLogin) {
 
   return user;
 }
-
-
 export async function findUserById(id: number) {
   const user = await userRepository.findById (id);
   if (!user) throw errorsSchema.failNotFound("User not found");
+
 
   return user;
 }
