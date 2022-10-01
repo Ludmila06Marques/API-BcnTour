@@ -12,5 +12,5 @@ publishRouter.put("/publish/:id" , validatePublish, publishController.toUpdate);
 publishRouter.delete("/publish/:id" , publishController.toDelete);
 publishRouter.get("/publishUser/:userId" , publishController.getPublishesByUserId);
 publishRouter.get("/publishOption/:optionId" , publishController.getPublishesByOption );
-
+publishRouter.get("/publish/:userId/:optionId" ,publishController.getPublishFromUserByOption ) ;
 export default publishRouter;

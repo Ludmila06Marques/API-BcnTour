@@ -6,7 +6,7 @@ import * as optionRepository from "../repositories/optionRepository.js"
 import * as errorsType from "../utils/errorUtils.js"
 
 export async function getAll(){
-    const publish= await publishRepository.getAll()
+    const publish= await publishRepository.getPublishWithUserData()
     if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
  
    return publish
@@ -70,8 +70,15 @@ export async function getPublishesByUserId(userId:number){
 export async function getPublishesByOption(optionId:number){
 
     const publish = await publishRepository.getPublishesByOption(optionId)
-  console.log(publish)
+
     if (!publish) throw errorsType.failNotFound("Not found publish");
     return publish
 }
 
+export async function getPublishFromUserByOption(userId:number ,optionId:number){
+
+    const publish = await publishRepository.getPublishFromUserByOption(userId ,optionId)
+
+    if (!publish) throw errorsType.failNotFound("Not found publish");
+    return publish
+}

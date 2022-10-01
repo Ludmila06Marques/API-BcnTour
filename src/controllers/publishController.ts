@@ -48,8 +48,19 @@ export async function getPublishesByUserId(req:Request ,res:Response){
 }
 export async function getPublishesByOption(req:Request ,res:Response){
     const optionId= parseInt(req.params.optionId)
-  console.log(optionId)
+
 
     const result = await publishService.getPublishesByOption(optionId)
+    console.log(result)
+    res.send(result).status(200)//sucess
+}
+
+export async function getPublishFromUserByOption(req:Request ,res:Response){
+    const optionId= parseInt(req.params.optionId)
+    const userId=parseInt(req.params.userId)
+
+
+    const result = await publishService.getPublishFromUserByOption(userId, optionId)
+    console.log(result)
     res.send(result).status(200)//sucess
 }

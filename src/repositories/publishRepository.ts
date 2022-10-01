@@ -1,6 +1,7 @@
 import { prisma } from "../dbStrategy/db.js"
 import * as publishSchema from "../type/publishType.js"
 
+
 export async function getAll(){
     return prisma.publish.findMany()
 }
@@ -41,11 +42,62 @@ export async function getPublishesByUserId(userId:number){
 
   return prisma.publish.findMany({where:{
     userId
+  }, select:{
+    coment:true,
+    urlImage:true,
+    rateNote:true,
+    localization:true,
+    user:{select:{
+      id:true,
+      name:true,
+      urlImage:true
+    }}
   }})
 }
 export async function getPublishesByOption(optionId:number){
 
   return prisma.publish.findMany({where:{
     optionId
+  }, select:{
+    coment:true,
+    urlImage:true,
+    rateNote:true,
+    localization:true,
+    user:{select:{
+      id:true,
+      name:true,
+      urlImage:true
+    }}
+  }})
+}
+export async function getPublishFromUserByOption(userId:number , optionId:number){
+
+  return prisma.publish.findMany({where:{
+    optionId, userId
+  }, select:{
+    coment:true,
+    urlImage:true,
+    rateNote:true,
+    localization:true,
+    user:{select:{
+      id:true,
+      name:true,
+      urlImage:true
+    }}
+  }})
+}
+
+export async function getPublishWithUserData(){
+
+  return prisma.publish.findMany({select:{
+    coment:true,
+    urlImage:true,
+    rateNote:true,
+    localization:true,
+    user:{select:{
+      id:true,
+      name:true,
+      urlImage:true
+    }}
   }})
 }
