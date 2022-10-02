@@ -43,6 +43,7 @@ export async function getPublishesByUserId(userId:number){
   return prisma.publish.findMany({where:{
     userId
   }, select:{
+    id:true,
     coment:true,
     urlImage:true,
     rateNote:true,

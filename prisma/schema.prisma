@@ -12,7 +12,6 @@ model Users {
   email    String    @unique
   password String
   name     String
-  city     String
   country  String
   urlImage String
   Publish  Publish[]
@@ -24,6 +23,7 @@ model Users {
 model Options {
   id       Int       @id @default(autoincrement())
   name     String
+  urlImage String
   Publish  Publish[]
 
   @@map("options")

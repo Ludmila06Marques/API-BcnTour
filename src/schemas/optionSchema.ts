@@ -3,5 +3,6 @@ import * as optionSchema from "../type/optionType.js"
 
 
 export const optionSchemaInput = Joi.object<optionSchema.CreateOptionType> ({
-name:Joi.string().required()
+name:Joi.string().required(),
+
 });

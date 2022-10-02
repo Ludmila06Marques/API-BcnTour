@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 import * as errorsSchema from "../utils/errorUtils.js"
 import * as userRepository from "../repositories/userRepository.js"
 import * as userSchema from "../type/userType.js"
-import * as publishService from "../services/publishService.js"
+import * as publishRepository from "../repositories/publishRepository.js"
+
 
 dotenv.config()
 
@@ -45,4 +46,24 @@ export async function findUserById(id: number) {
 
 
   return user;
+}
+export async function deleteUser(id:number){
+  if(isNaN(id)) throw errorsSchema.failNotFound('Id must be a number')
+
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+
+  const publishesOfUser = await publishRepository.getPublishesByUserId(id)
+  console.log(publishesOfUser)
+
+  if(publishesOfUser.length!== 0){
+    for(let i=0 ; i<publishesOfUser.length ; i++){
+      await publishRepository.toDelete(publishesOfUser[i].id)
+  
+    }
+  }else{}
+
+  await userRepository.deleteUser(id)
+
 }

@@ -13,3 +13,7 @@ export async function findById(id: number) {
 export async function insertUser(user:userSchema.CreateUserType){
     return prisma.users.create({data:user})
 }
+
+export async function deleteUser(id:number){
+  return prisma.users.delete({where:{id}})
+}
