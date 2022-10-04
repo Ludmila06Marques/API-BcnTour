@@ -43,6 +43,7 @@ export function validatePublish(req : Request, res:Response, next:NextFunction) 
   console.log(req.body)
   const validation =publishSchema.publishSchemaInput.validate(publish)
   if (validation.error) {
+  console.log(validation.error)
     throw failSchema('Wrong schema')
   }
 

@@ -3,7 +3,17 @@ import * as publishSchema from "../type/publishType.js"
 
 
 export async function getAll(){
-    return prisma.publish.findMany()
+    return prisma.publish.findMany({select:{
+      id:true,
+      coment:true,
+      rateNote:true,
+      urlImage:true,
+      userId:true,
+      option:true,
+      localizationId:true
+    }
+
+    })
 }
 
 export async function getOne(id:number) {
@@ -25,7 +35,7 @@ export async function  toDelete(id: number) {
       where: { id }
     })
   }
-export async function toUpdate(id:number ,publish:publishSchema.CreatePublishTypeInput){
+export async function toUpdate(id:number ,publish:publishSchema.CreatePublishType){
    return prisma.publish.update({
       where: {
        id
@@ -91,6 +101,7 @@ export async function getPublishFromUserByOption(userId:number , optionId:number
 export async function getPublishWithUserData(){
 
   return prisma.publish.findMany({select:{
+    id:true,
     coment:true,
     urlImage:true,
     rateNote:true,

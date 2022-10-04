@@ -18,7 +18,7 @@ export async function getOne(req:Request ,res:Response){
 }
 
 export async function insert(req:Request ,res:Response) {
-    const publish:publishType.CreatePublishType=req.body
+    const publish:publishType.CreatePublishInput=req.body
 
    
     await publishService.insert(publish)
@@ -34,7 +34,7 @@ export async function toDelete(req:Request ,res:Response){
 
 export async function toUpdate(req:Request ,res:Response){
     const id= parseInt(req.params.id)
-    const publish:publishType.CreatePublishTypeInput= req.body
+    const publish:publishType.CreatePublishType= req.body
 
     await publishService.toUpdate(id ,publish)
     res.sendStatus(200)//sucess

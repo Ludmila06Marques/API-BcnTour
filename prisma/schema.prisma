@@ -14,8 +14,10 @@ model Users {
   name     String
   country  String
   urlImage String
+  createdAt   DateTime  @default(now())
   Publish  Publish[]
   Rate     Rate[]
+  UserLocation  UserLocation[]
 
   @@map("users")
 }
@@ -34,12 +36,16 @@ model Publish {
   coment   String
   urlImage String
   rateNote String
-  localization String 
+  localizationId Int
   userId   Int
   optionId Int
+createdAt  DateTime  @default(now())
+
+  localization  Localization @relation(fields: [localizationId], references: [id])
   option   Options @relation(fields: [optionId], references: [id])
   user     Users   @relation(fields: [userId], references: [id])
   Rate     Rate[]
+ 
 
   @@map("publish")
 }
@@ -49,8 +55,33 @@ model Rate {
   userId    Int
   publishId Int
   note      Int
+
+
   publish   Publish @relation(fields: [publishId], references: [id])
   user      Users   @relation(fields: [userId], references: [id])
 
   @@map("rate")
+}
+
+model Localization {
+  id        Int     @id @default(autoincrement())
+  name     String
+  latitude String
+  longitude String
+
+  
+  Publish   Publish[]
+  UserLocation  UserLocation[]
+
+  @@map("localization")
+}
+
+model UserLocation {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  localizationId Int
+createdAt   DateTime  @default(now())
+  localization  Localization @relation(fields: [localizationId], references: [id])
+  user      Users   @relation(fields: [userId], references: [id])
+  @@map("userLocation")
 }
