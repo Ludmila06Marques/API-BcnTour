@@ -66,7 +66,8 @@ export async function insert(publish:publishType.CreatePublishInput){
         rateNote:publish.rateNote,
         localizationId:localizationName.id,
         userId:publish.userId,
-        optionId:publish.optionId
+        optionId:publish.optionId,
+        
     }
    
    

@@ -18,6 +18,15 @@ export async function getAllUserLocation(id:number){
     return localization
 
 }
+export async function getLocationByRate(userId:number , rateNote:string){
+
+    const localization= await localizationRepository.getLocationByRate(userId , rateNote)
+    if(localization.length==0)throw errorsType.failNotFound("Localization doesn't exist");
+
+    return localization
+
+}
+
 
 export async function getOne(id:number){
 

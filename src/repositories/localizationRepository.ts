@@ -5,10 +5,12 @@ import * as localizationSchema from "../type/localizationType.js"
 export async function getAll() {
     return prisma.localization.findMany()
   }
-  export async function getAllUserLocation(id:number) {
+export async function getAllUserLocation(id:number) {
    return prisma.publish.findMany({where:{userId:id} , select:{rateNote:true , localization:{select:{name:true, latitude:true , longitude:true}} }})
      }
-     
+
+export async function getLocationByRate( userId:number ,rateNote:string){
+return prisma.publish.findMany({where:{userId , rateNote} , select:{localization:true} })}
   
   export async function getOne(id:number) {
     return prisma.localization.findFirst({

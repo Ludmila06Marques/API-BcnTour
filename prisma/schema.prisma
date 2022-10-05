@@ -14,7 +14,7 @@ model Users {
   name     String
   country  String
   urlImage String
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime  @default(now())  @db.Date
   Publish  Publish[]
   Rate     Rate[]
   UserLocation  UserLocation[]
@@ -39,7 +39,7 @@ model Publish {
   localizationId Int
   userId   Int
   optionId Int
-createdAt  DateTime  @default(now())
+createdAt  DateTime  @default(now())  @db.Date
 
   localization  Localization @relation(fields: [localizationId], references: [id])
   option   Options @relation(fields: [optionId], references: [id])
@@ -80,7 +80,7 @@ model UserLocation {
   id        Int     @id @default(autoincrement())
   userId    Int
   localizationId Int
-createdAt   DateTime  @default(now())
+createdAt   DateTime  @default(now())  @db.Date
   localization  Localization @relation(fields: [localizationId], references: [id])
   user      Users   @relation(fields: [userId], references: [id])
   @@map("userLocation")

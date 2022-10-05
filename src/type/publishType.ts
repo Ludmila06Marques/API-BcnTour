@@ -1,6 +1,6 @@
 import { Publish } from "@prisma/client"
 
-export type CreatePublishType= Omit <Publish , "id">
+export type CreatePublishType= Omit <Publish , "id" | "createdAt">
 
 
 export type CreatePublishInput={

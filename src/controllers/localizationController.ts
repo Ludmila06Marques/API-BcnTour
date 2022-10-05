@@ -13,6 +13,15 @@ export async function getAllUserLocation(req:Request ,res:Response){
     res.send(result).status(200)//sucess
 }
 
+export async function getLocationByRate(req:Request ,res:Response){
+     console.log("aq")
+    const userId= parseInt(req.params.userId)
+    const rateNote= req.params.rateNote
+   
+    const result = await localizationService.getLocationByRate(userId ,rateNote)
+    res.send(result).status(200)//sucess
+}
+
 export async function getOne(req:Request ,res:Response){
     const id= parseInt(req.params.id)
 
