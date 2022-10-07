@@ -29,3 +29,11 @@ export async function deleteUser(req:Request ,res:Response){
 
   res.sendStatus(200)//sucess
 }
+
+export async function toUpdate(req:Request ,res:Response){
+  const id= parseInt(req.params.id)
+  const {mode}= req.body
+
+  await userService.toUpdate(id ,mode)
+  res.sendStatus(200)//sucess
+}

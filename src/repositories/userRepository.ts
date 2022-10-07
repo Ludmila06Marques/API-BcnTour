@@ -17,3 +17,13 @@ export async function insertUser(user:userSchema.CreateUserType){
 export async function deleteUser(id:number){
   return prisma.users.delete({where:{id}})
 }
+export async function toUpdate(id:number , mode:string){
+  return prisma.users.update({
+     where: {
+      id
+     },
+     data: {
+       mode,
+     },
+   })
+ }

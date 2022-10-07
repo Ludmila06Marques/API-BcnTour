@@ -101,8 +101,9 @@ export async function getPublishesByUserId(userId:number){
 export async function getPublishesByOption(optionId:number){
 
     const publish = await publishRepository.getPublishesByOption(optionId)
-
+ 
     if (!publish) throw errorsType.failNotFound("Not found publish");
+    
     return publish
 }
 

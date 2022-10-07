@@ -67,3 +67,12 @@ export async function deleteUser(id:number){
   await userRepository.deleteUser(id)
 
 }
+
+export async function toUpdate( id:number , mode:string){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdate(id ,mode)
+
+}

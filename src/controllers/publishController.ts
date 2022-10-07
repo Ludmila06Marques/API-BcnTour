@@ -51,7 +51,7 @@ export async function getPublishesByOption(req:Request ,res:Response){
 
 
     const result = await publishService.getPublishesByOption(optionId)
-    console.log(result)
+   
     res.send(result).status(200)//sucess
 }
 
