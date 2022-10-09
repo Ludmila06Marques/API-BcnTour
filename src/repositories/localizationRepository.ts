@@ -31,6 +31,8 @@ return prisma.publish.findMany({where:{userId , rateNote} , select:{localization
       where: { id }
     })
   }
+
+
   export async function toUpdate(id:number , name:string){
    return prisma.localization.update({
       where: {
@@ -44,4 +46,8 @@ return prisma.publish.findMany({where:{userId , rateNote} , select:{localization
 
   export async function getByName(name:string){
     return prisma.localization.findFirst({where:{name}})
+  }
+
+  export async function getById(userId:number){
+    return prisma.userLocation.findMany({where:{userId}})
   }

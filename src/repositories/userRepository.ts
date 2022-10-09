@@ -27,3 +27,46 @@ export async function toUpdate(id:number , mode:string){
      },
    })
  }
+
+ export async function toUpdateInfo(id:number , body:any){
+  return prisma.users.update({
+     where: {
+      id
+     },
+     data: {
+     name:body.name,
+     country:body.country,
+     urlImage:body.urlImage
+     },
+   })
+ }
+ export async function toUpdateName(id:number ,name:string){
+  return prisma.users.update({
+     where: {
+      id
+     },
+     data: {
+   name
+     },
+   })
+ }
+ export async function toUpdatePhoto(id:number ,urlImage:string){
+  return prisma.users.update({
+     where: {
+      id
+     },
+     data: {
+      urlImage
+     },
+   })
+ }
+ export async function toUpdateCountry(id:number ,country:string){
+  return prisma.users.update({
+     where: {
+      id
+     },
+     data: {
+      country
+     },
+   })
+ }

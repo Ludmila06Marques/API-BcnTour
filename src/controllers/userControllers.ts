@@ -37,3 +37,32 @@ export async function toUpdate(req:Request ,res:Response){
   await userService.toUpdate(id ,mode)
   res.sendStatus(200)//sucess
 }
+
+export async function toUpdateInfo(req:Request ,res:Response){
+  const id= parseInt(req.params.id)
+  const body= req.body
+
+  await userService.toUpdateInfo(id ,body)
+  res.sendStatus(200)//sucess
+}
+export async function toUpdateName(req:Request ,res:Response){
+  const id= parseInt(req.params.id)
+  const {name}= req.body
+
+  await userService.toUpdateName(id ,name)
+  res.sendStatus(200)//sucess
+}
+export async function toUpdatePhoto(req:Request ,res:Response){
+  const id= parseInt(req.params.id)
+  const {urlImage}= req.body
+
+  await userService.toUpdatePhoto(id ,urlImage)
+  res.sendStatus(200)//sucess
+}
+export async function toUpdateCountry(req:Request ,res:Response){
+  const id= parseInt(req.params.id)
+  const {country}= req.body
+
+  await userService.toUpdateCountry(id ,country)
+  res.sendStatus(200)//sucess
+}

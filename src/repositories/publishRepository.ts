@@ -65,6 +65,12 @@ export async function getPublishesByUserId(userId:number){
     }}
   }})
 }
+
+export async function toDeleteMany(userId:number){
+  return prisma.publish.deleteMany({where:{userId}})
+}
+
+
 export async function getPublishesByOption(optionId:number){
 
   return prisma.publish.findMany({where:{
