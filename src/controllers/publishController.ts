@@ -66,18 +66,27 @@ export async function getPublishFromUserByOption(req:Request ,res:Response){
 }
 
 export async function toUpdateRate(req:Request ,res:Response){
-    const id= parseInt(req.params.id)
-    console.log(id)
-    const{rate}= req.body
+    const id= parseInt(req.params.publishId)
 
-    await publishService.toUpdateRate(id ,rate)
+    const{rateNote}= req.body
+
+    await publishService.toUpdateRate(id ,rateNote)
     res.sendStatus(200)//sucess
 }
 
 export async function toUpdateComent(req:Request ,res:Response){
-    const id= parseInt(req.params.id)
+    const id= parseInt(req.params.publishId)
     const comentario= req.body
 
     await publishService.toUpdateComent(id ,comentario.coment)
     res.sendStatus(200)//sucess
+}
+export async function filterPublishByRate(req:Request ,res:Response){
+    const id= parseInt(req.params.userId)
+   const {rateNote}=req.body
+
+
+    const result = await publishService.filterPublishByRate(id, rateNote)
+    console.log(result)
+    res.send(result).status(200)//sucess
 }

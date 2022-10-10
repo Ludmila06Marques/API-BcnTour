@@ -119,15 +119,18 @@ export async function getPublishWithUserData(){
     }}
   }})
 }
-export async function toUpdateRate(id:number ,rate:string){
- return await prisma.publish.update({
-    where: {
+export async function toUpdateRate(id:number ,rateNote:string){
+ let result = await prisma.publish.update({
+  where: {
     id
-    },
-    data: {
-   rateNote:rate
-    },
-  })
+  },
+  data:{
+   rateNote
+  }
+  
+})
+console.log(result)
+return result
  }
  export async function toUpdateComent(id:number ,coment:string){
   return await prisma.publish.update({
@@ -139,3 +142,8 @@ export async function toUpdateRate(id:number ,rate:string){
     },
   })
  }
+
+ export async function filterPublishByRate(id:number , rateNote:string){
+  return await prisma.publish.findMany({where:{id, rateNote }})
+ }
+ 

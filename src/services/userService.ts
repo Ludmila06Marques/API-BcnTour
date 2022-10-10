@@ -26,6 +26,7 @@ export async function loginUser(login: userSchema.CreateUserTypeLogin) {
   
   const user = await createToken(login);
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+
   const formatResponse={
     token , 
     user

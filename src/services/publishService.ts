@@ -9,7 +9,8 @@ import * as userLocalRepository from "../repositories/userLocalizationRepository
 
 export async function getAll(){
     const publish= await publishRepository.getPublishWithUserData()
-    if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
+
+   // if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
  
 
   //  const loclizationOfPublish= await localizationRepository.getOne(publish.localizationId)
@@ -114,13 +115,13 @@ export async function getPublishFromUserByOption(userId:number ,optionId:number)
     if (!publish) throw errorsType.failNotFound("Not found publish");
     return publish
 }
-export async function toUpdateRate(id:number , rate:string){
+export async function toUpdateRate(id:number , rateNote:string){
 
     const publishExist= await publishRepository.getOne(id)
     if(!publishExist) throw errorsType.failNotFound("Not found publish")
 
-    console.log(publishExist)
-    await publishRepository.toUpdateRate(id , rate)
+ 
+    await publishRepository.toUpdateRate(id , rateNote)
 
 }
 export async function toUpdateComent(id:number , coment:string){
@@ -130,4 +131,15 @@ export async function toUpdateComent(id:number , coment:string){
 
     await publishRepository.toUpdateComent(id , coment)
 
+}
+export async function filterPublishByRate(id:number , rateNote:string){
+
+    const user = await userRepository.findById(id)
+ 
+    if (!user) throw errorsType.failNotFound("User dont exist");
+
+
+    const rates = await publishRepository.filterPublishByRate(id , rateNote)
+    
+    return rates
 }
