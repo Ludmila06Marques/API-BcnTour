@@ -114,3 +114,20 @@ export async function getPublishFromUserByOption(userId:number ,optionId:number)
     if (!publish) throw errorsType.failNotFound("Not found publish");
     return publish
 }
+export async function toUpdateRate(id:number , rate:string){
+
+    const publishExist= await publishRepository.getOne(id)
+    if(!publishExist) throw errorsType.failNotFound("Not found publish")
+
+    console.log(publishExist)
+    await publishRepository.toUpdateRate(id , rate)
+
+}
+export async function toUpdateComent(id:number , coment:string){
+
+    const publishExist= await publishRepository.getOne(id)
+    if(!publishExist) throw errorsType.failNotFound("Not found publish")
+
+    await publishRepository.toUpdateComent(id , coment)
+
+}

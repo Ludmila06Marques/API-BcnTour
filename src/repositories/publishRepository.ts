@@ -119,3 +119,23 @@ export async function getPublishWithUserData(){
     }}
   }})
 }
+export async function toUpdateRate(id:number ,rate:string){
+ return await prisma.publish.update({
+    where: {
+    id
+    },
+    data: {
+   rateNote:rate
+    },
+  })
+ }
+ export async function toUpdateComent(id:number ,coment:string){
+  return await prisma.publish.update({
+    where: {
+    id
+    },
+    data: {
+  coment:coment
+    },
+  })
+ }

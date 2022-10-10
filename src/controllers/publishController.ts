@@ -64,3 +64,20 @@ export async function getPublishFromUserByOption(req:Request ,res:Response){
     console.log(result)
     res.send(result).status(200)//sucess
 }
+
+export async function toUpdateRate(req:Request ,res:Response){
+    const id= parseInt(req.params.id)
+    console.log(id)
+    const{rate}= req.body
+
+    await publishService.toUpdateRate(id ,rate)
+    res.sendStatus(200)//sucess
+}
+
+export async function toUpdateComent(req:Request ,res:Response){
+    const id= parseInt(req.params.id)
+    const comentario= req.body
+
+    await publishService.toUpdateComent(id ,comentario.coment)
+    res.sendStatus(200)//sucess
+}
