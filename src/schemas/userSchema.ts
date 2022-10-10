@@ -6,7 +6,6 @@ export const userSchemaSignup = Joi.object<userSchemaType.CreateUserType> ({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(), 
   name:Joi.string().required(), 
-  city:Joi.string().required(), 
   country: Joi.string().required(), 
   urlImage: Joi.string()
   .uri()

@@ -18,7 +18,7 @@ export async function getOne(req:Request ,res:Response){
 }
 
 export async function insert(req:Request ,res:Response) {
-    const publish:publishType.CreatePublishType=req.body
+    const publish:publishType.CreatePublishInput=req.body
 
    
     await publishService.insert(publish)
@@ -34,7 +34,7 @@ export async function toDelete(req:Request ,res:Response){
 
 export async function toUpdate(req:Request ,res:Response){
     const id= parseInt(req.params.id)
-    const publish:publishType.CreatePublishTypeInput= req.body
+    const publish:publishType.CreatePublishType= req.body
 
     await publishService.toUpdate(id ,publish)
     res.sendStatus(200)//sucess
@@ -51,7 +51,7 @@ export async function getPublishesByOption(req:Request ,res:Response){
 
 
     const result = await publishService.getPublishesByOption(optionId)
-    console.log(result)
+   
     res.send(result).status(200)//sucess
 }
 
@@ -61,6 +61,32 @@ export async function getPublishFromUserByOption(req:Request ,res:Response){
 
 
     const result = await publishService.getPublishFromUserByOption(userId, optionId)
+    console.log(result)
+    res.send(result).status(200)//sucess
+}
+
+export async function toUpdateRate(req:Request ,res:Response){
+    const id= parseInt(req.params.publishId)
+
+    const{rateNote}= req.body
+
+    await publishService.toUpdateRate(id ,rateNote)
+    res.sendStatus(200)//sucess
+}
+
+export async function toUpdateComent(req:Request ,res:Response){
+    const id= parseInt(req.params.publishId)
+    const comentario= req.body
+
+    await publishService.toUpdateComent(id ,comentario.coment)
+    res.sendStatus(200)//sucess
+}
+export async function filterPublishByRate(req:Request ,res:Response){
+    const id= parseInt(req.params.userId)
+   const {rateNote}=req.body
+
+
+    const result = await publishService.filterPublishByRate(id, rateNote)
     console.log(result)
     res.send(result).status(200)//sucess
 }

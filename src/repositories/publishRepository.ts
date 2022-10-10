@@ -3,7 +3,17 @@ import * as publishSchema from "../type/publishType.js"
 
 
 export async function getAll(){
-    return prisma.publish.findMany()
+    return prisma.publish.findMany({select:{
+      id:true,
+      coment:true,
+      rateNote:true,
+      urlImage:true,
+      userId:true,
+      option:true,
+      localizationId:true
+    }
+
+    })
 }
 
 export async function getOne(id:number) {
@@ -25,7 +35,7 @@ export async function  toDelete(id: number) {
       where: { id }
     })
   }
-export async function toUpdate(id:number ,publish:publishSchema.CreatePublishTypeInput){
+export async function toUpdate(id:number ,publish:publishSchema.CreatePublishType){
    return prisma.publish.update({
       where: {
        id
@@ -43,6 +53,7 @@ export async function getPublishesByUserId(userId:number){
   return prisma.publish.findMany({where:{
     userId
   }, select:{
+    id:true,
     coment:true,
     urlImage:true,
     rateNote:true,
@@ -54,6 +65,12 @@ export async function getPublishesByUserId(userId:number){
     }}
   }})
 }
+
+export async function toDeleteMany(userId:number){
+  return prisma.publish.deleteMany({where:{userId}})
+}
+
+
 export async function getPublishesByOption(optionId:number){
 
   return prisma.publish.findMany({where:{
@@ -90,6 +107,7 @@ export async function getPublishFromUserByOption(userId:number , optionId:number
 export async function getPublishWithUserData(){
 
   return prisma.publish.findMany({select:{
+    id:true,
     coment:true,
     urlImage:true,
     rateNote:true,
@@ -101,3 +119,31 @@ export async function getPublishWithUserData(){
     }}
   }})
 }
+export async function toUpdateRate(id:number ,rateNote:string){
+ let result = await prisma.publish.update({
+  where: {
+    id
+  },
+  data:{
+   rateNote
+  }
+  
+})
+console.log(result)
+return result
+ }
+ export async function toUpdateComent(id:number ,coment:string){
+  return await prisma.publish.update({
+    where: {
+    id
+    },
+    data: {
+  coment:coment
+    },
+  })
+ }
+
+ export async function filterPublishByRate(id:number , rateNote:string){
+  return await prisma.publish.findMany({where:{id, rateNote }})
+ }
+ 

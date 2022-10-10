@@ -12,11 +12,13 @@ model Users {
   email    String    @unique
   password String
   name     String
-  city     String
   country  String
   urlImage String
+  mode     String    @default("ligth")
+  createdAt   DateTime  @default(now())  @db.Date
   Publish  Publish[]
   Rate     Rate[]
+  UserLocation  UserLocation[]
 
   @@map("users")
 }
@@ -24,6 +26,7 @@ model Users {
 model Options {
   id       Int       @id @default(autoincrement())
   name     String
+  urlImage String
   Publish  Publish[]
 
   @@map("options")
@@ -34,12 +37,16 @@ model Publish {
   coment   String
   urlImage String
   rateNote String
-  localization String 
+  localizationId Int
   userId   Int
   optionId Int
+createdAt  DateTime  @default(now())  @db.Date
+
+  localization  Localization @relation(fields: [localizationId], references: [id])
   option   Options @relation(fields: [optionId], references: [id])
   user     Users   @relation(fields: [userId], references: [id])
   Rate     Rate[]
+ 
 
   @@map("publish")
 }
@@ -49,8 +56,33 @@ model Rate {
   userId    Int
   publishId Int
   note      Int
+
+
   publish   Publish @relation(fields: [publishId], references: [id])
   user      Users   @relation(fields: [userId], references: [id])
 
   @@map("rate")
+}
+
+model Localization {
+  id        Int     @id @default(autoincrement())
+  name     String
+  latitude String
+  longitude String
+
+  
+  Publish   Publish[]
+  UserLocation  UserLocation[]
+
+  @@map("localization")
+}
+
+model UserLocation {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  localizationId Int
+createdAt   DateTime  @default(now())  @db.Date
+  localization  Localization @relation(fields: [localizationId], references: [id])
+  user      Users   @relation(fields: [userId], references: [id])
+  @@map("userLocation")
 }

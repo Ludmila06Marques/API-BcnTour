@@ -5,7 +5,10 @@ import dotenv from "dotenv";
 import * as errorsSchema from "../utils/errorUtils.js"
 import * as userRepository from "../repositories/userRepository.js"
 import * as userSchema from "../type/userType.js"
-import * as publishService from "../services/publishService.js"
+import * as publishRepository from "../repositories/publishRepository.js"
+import * as localRepository from "../repositories/localizationRepository.js"
+import * as userLocalRepository from "../repositories/userLocalizationRepository.js"
+
 
 dotenv.config()
 
@@ -23,6 +26,7 @@ export async function loginUser(login: userSchema.CreateUserTypeLogin) {
   
   const user = await createToken(login);
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+
   const formatResponse={
     token , 
     user
@@ -45,4 +49,58 @@ export async function findUserById(id: number) {
 
 
   return user;
+}
+export async function deleteUser(id:number){
+  if(isNaN(id)) throw errorsSchema.failNotFound('Id must be a number')
+
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+
+  await publishRepository.toDeleteMany(id)
+  await userLocalRepository.toDelete(id)
+  await userRepository.deleteUser(id)
+
+}
+
+export async function toUpdate( id:number , mode:string){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdate(id ,mode)
+
+}
+
+export async function toUpdateInfo( id:number , body:any){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdateInfo(id ,body)
+
+}
+export async function toUpdateName( id:number , name:string){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdateName(id ,name)
+
+}
+export async function toUpdatePhoto( id:number ,urlImage:string){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdatePhoto(id ,urlImage)
+
+}
+export async function toUpdateCountry( id:number , country:string){
+ 
+  const userExist=await userRepository.findById(id)
+  if(!userExist) throw errorsSchema.failNotFound("Not found user")
+
+  await userRepository.toUpdateCountry(id ,country)
+
 }

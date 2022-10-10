@@ -3,11 +3,17 @@ import * as publishType from "../type/publishType.js"
 import * as publishRepository from "../repositories/publishRepository.js"
 import * as userRepository from "../repositories/userRepository.js"
 import * as optionRepository from "../repositories/optionRepository.js"
+import * as localizationRepository from "../repositories/localizationRepository.js"
 import * as errorsType from "../utils/errorUtils.js"
+import * as userLocalRepository from "../repositories/userLocalizationRepository.js"
 
 export async function getAll(){
     const publish= await publishRepository.getPublishWithUserData()
-    if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
+
+   // if(publish.length==0)throw errorsType.failNotFound("Publishes doesn't exist");
+ 
+
+  //  const loclizationOfPublish= await localizationRepository.getOne(publish.localizationId)
  
    return publish
 
@@ -24,27 +30,53 @@ export async function getOne(id:number){
     return publish
 }
 
-export async function insert(publish:publishType.CreatePublishType){
+export async function insert(publish:publishType.CreatePublishInput){
+
     const userIdExist =await userRepository.findById(publish.userId)
     if(!userIdExist) throw errorsType.failNotFound("User doesnt exist")
 
     const optionIdExist=await optionRepository.getOne(publish.optionId)
     if(!optionIdExist) throw errorsType.failNotFound("Option doesnt exist")
 
+    const localizationExist= await localizationRepository.getByName(publish.localizationName)
+    const formatLocalization={
+        name:publish.localizationName,
+        latitude:publish.localizationLat,
+        longitude:publish.localizationLong
+    }
+
+    
+    if(!localizationExist) await localizationRepository.insert(formatLocalization)
+
+
+    const localizationName= await localizationRepository.getByName(publish.localizationName)
+
+    const local={
+        userId:publish.userId,
+        localizationId:localizationName.id
+
+    }
+    await userLocalRepository.insert(local)
+
+
+   
 
     const publishFormatted={
         coment:publish.coment,
         urlImage:publish.urlImage,
         rateNote:publish.rateNote,
-        localization:publish.localization,
+        localizationId:localizationName.id,
         userId:publish.userId,
-        optionId:publish.optionId
+        optionId:publish.optionId,
+        
     }
-    console.log(publishFormatted)
+   
+   
     await publishRepository.insert(publishFormatted)
 }
 
-export async function toUpdate(id:number , publish: publishType.CreatePublishTypeInput){
+export async function toUpdate(id:number , publish: publishType.CreatePublishType){
+
     const publishExist= await publishRepository.getOne(id)
     if(!publishExist) throw errorsType.failNotFound("Not found publish")
 
@@ -70,8 +102,9 @@ export async function getPublishesByUserId(userId:number){
 export async function getPublishesByOption(optionId:number){
 
     const publish = await publishRepository.getPublishesByOption(optionId)
-
+ 
     if (!publish) throw errorsType.failNotFound("Not found publish");
+    
     return publish
 }
 
@@ -81,4 +114,32 @@ export async function getPublishFromUserByOption(userId:number ,optionId:number)
 
     if (!publish) throw errorsType.failNotFound("Not found publish");
     return publish
+}
+export async function toUpdateRate(id:number , rateNote:string){
+
+    const publishExist= await publishRepository.getOne(id)
+    if(!publishExist) throw errorsType.failNotFound("Not found publish")
+
+ 
+    await publishRepository.toUpdateRate(id , rateNote)
+
+}
+export async function toUpdateComent(id:number , coment:string){
+
+    const publishExist= await publishRepository.getOne(id)
+    if(!publishExist) throw errorsType.failNotFound("Not found publish")
+
+    await publishRepository.toUpdateComent(id , coment)
+
+}
+export async function filterPublishByRate(id:number , rateNote:string){
+
+    const user = await userRepository.findById(id)
+ 
+    if (!user) throw errorsType.failNotFound("User dont exist");
+
+
+    const rates = await publishRepository.filterPublishByRate(id , rateNote)
+    
+    return rates
 }
